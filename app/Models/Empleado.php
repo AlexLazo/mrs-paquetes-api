@@ -4,10 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
-
 
 class Empleado extends Model
 {
@@ -68,30 +66,7 @@ class Empleado extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id');
-    }
-    public function roles()
-    {
-        return $this->belongsTo(Role::class, 'id');
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        // Evento para asignar 'created_by' al crear un registro
-        static::creating(function ($model) {
-            if (auth()->check()) {
-                $model->created_by = auth()->id();
-            }
-        });
-
-        // Evento para asignar 'updated_by' al actualizar un registro
-        static::updating(function ($model) {
-            if (auth()->check()) {
-                $model->updated_by = auth()->id();
-            }
-        });
+        return $this->hasOne(User::class, 'id_empleado');
     }
 
     public static function search($filters)
@@ -114,7 +89,13 @@ class Empleado extends Model
             $query->where('id_estado', $filters['id_estado']);
         }
 
-        return $query->with(['genero', 'estado', 'cargo', 'departamento', 'municipio','user','roles'],)->get();
+        return $query->with([
+            'genero',
+            'estado',
+            'cargo',
+            'departamento',
+            'municipio',
+            'user.roles'
+        ])->get();
     }
-
 }
