@@ -174,6 +174,7 @@ Route::group(['middleware' => ['jwt.verify', 'check.access']], function () {
     Route::get('dropdown/get_departamentos', [DropdownController::class, 'getDepartamentos']);
     Route::get('dropdown/get_municipio/{id}', [DropdownController::class, 'getMunicipios']);
     Route::get('dropdown/get_generos', [DropdownController::class, 'getGeneros']);
+    Route::get('dropdown/get_modelos', [DropdownController::class, 'getModelos']);
     Route::get('dropdown/get_marcas', [DropdownController::class, 'getMarcas']);
     Route::get('dropdown/get_estados', [DropdownController::class, 'getEstados']);
     Route::get('dropdown/get_estado_paquete', [DropdownController::class, 'getEstadoPaquete']);

@@ -48,7 +48,12 @@ class DropdownController extends Controller
         return response()->json(["marcas" => $marca]);
 
     }
-
+    public function getModelos()
+    {
+        $modelos = DB::table('modelos')->select('id', 'nombre', 'descripcion')->get();
+        return response()->json(["modelos" => $modelos]);
+    }
+    
     public function getEstados()
     {
         $estado = DB::table('estados')->select('id', 'nombre','descripcion')->get();
